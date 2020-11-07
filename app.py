@@ -50,8 +50,6 @@ except mariadb.IntegrityError:
 except mariadb.InternalError:
     print("Internal error of database!")
 
-except:
-    print("An unanticipated error has occured.")
 
 finally:
     if(cursor != None):

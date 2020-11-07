@@ -24,8 +24,7 @@ def CreateExploit(user):
     except mariadb.InternalError:
         print("Internal error of database!")
 
-    except:
-        print("An unanticipated error has occured.")
+
 
 def ViewYourExploits(user,alias):
     try:
@@ -48,8 +47,7 @@ def ViewYourExploits(user,alias):
     except mariadb.InternalError:
         print("Internal error of database!")
 
-    except:
-        print("An unanticipated error has occured.")
+
 
 def ViewOthersExploits(user):
     try:
@@ -58,7 +56,6 @@ def ViewOthersExploits(user):
         cursor.execute("SELECT * FROM exploits WHERE user_id != ?", [user[0],])
         posts = cursor.fetchall()
         for post in posts:
-            print("\nalias: " + alias[2])
             print("\ncontent: " + str((post[1])))
 
     except mariadb.ProgrammingError:
@@ -72,6 +69,3 @@ def ViewOthersExploits(user):
 
     except mariadb.InternalError:
         print("Internal error of database!")
-
-    except:
-        print("An unanticipated error has occured.")
