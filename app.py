@@ -1,6 +1,6 @@
 import dbcreds
 import mariadb
-import viewallexploits
+import functions
 
 conn = None
 cursor = None
@@ -12,20 +12,26 @@ try:
     alias = input("Please type your alias: ")
     password = input("Please type your password: ")
     cursor.execute("SELECT * FROM hackers WHERE alias=? AND password=?", [alias,password,])
-    cursor.fetchall()
-    if(cursor.rowcount == 1):
-        print("User Login Successful!")
-        print("Select an Option:\n 1. Create an exploit\n 2. See all of your exploits\n 3. See all other aliases exploits\n 4. Exit the application")
+    user = cursor.fetchone()
+    if user:
+        print("User Login Successful!\n --------------------------")
+    while True:
+        print("Select an Option:\n 1. Create an exploit\n 2. See all of your exploits\n 3. See all other aliases exploits\n 4. Exit the application \n --------------------------")
         user_choice = input("Enter your Option: ")
+       
         if user_choice == "1":
-           
+            functions.CreateExploit(user)
+        
         elif user_choice == "2":
-           
+            functions.ViewYourExploits(user)
+        
         elif user_choice == "3":
-            viewallexploits.ViewAllExploits()
-
-        elif user_choice == "4":
+            functions.ViewOthersExploits(user)
             
+        elif user_choice == "4":
+            print("--------------------------\n Good-Bye!")
+            break
+             
         else: 
             print("Please try again, invalid input!")
     else: 
