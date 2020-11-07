@@ -27,7 +27,7 @@ def CreateExploit(user):
     except:
         print("An unanticipated error has occured.")
 
-def ViewYourExploits(user):
+def ViewYourExploits(user,alias):
     try:
         conn = mariadb.connect(user=dbcreds.user, password=dbcreds.password, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
         cursor = conn.cursor()
@@ -58,6 +58,7 @@ def ViewOthersExploits(user):
         cursor.execute("SELECT * FROM exploits WHERE user_id != ?", [user[0],])
         posts = cursor.fetchall()
         for post in posts:
+            print("\nalias: " + alias[2])
             print("\ncontent: " + str((post[1])))
 
     except mariadb.ProgrammingError:
