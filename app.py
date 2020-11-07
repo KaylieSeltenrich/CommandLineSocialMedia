@@ -8,11 +8,20 @@ cursor = None
 try:
     conn = mariadb.connect(user=dbcreds.user, password=dbcreds.password, port=dbcreds.port, database=dbcreds.database, host=dbcreds.host)
     cursor = conn.cursor()
-    alias = input("Please type your alias: ")
-    password = input("Please type your password: ")
-    cursor.execute("SELECT * FROM hackers WHERE alias=? AND password=?", [alias,password,])
-    user = cursor.fetchone()
-    if user:
+    print("Welcome to Hackers Social Media. Select an Option:\n 1.Login \n 2.Signup")
+    user_welcomechoice = input("\nEnter your Option:")
+    if user_welcomechoice == "1":
+        alias = input("Please type your alias: ")
+        password = input("Please type your password: ")
+        cursor.execute("SELECT * FROM hackers WHERE alias=? AND password=?", [alias,password,])
+        user = cursor.fetchone()
+    elif user_welcomechoice == "2":
+        functions.CreateNewUser()
+        user = None
+    else: 
+        print("Error! Please Try Again.")
+
+    if user != None:
         if password == user[2]:
             print("User Login Successful!\n --------------------------")
             while True:

@@ -70,3 +70,21 @@ def ViewOthersExploits(user):
 
     except mariadb.InternalError:
         print("Internal error of database!")
+
+
+def CreateNewUser():
+
+    conn = mariadb.connect(user=dbcreds.user, password=dbcreds.password, port=dbcreds.port, database=dbcreds.database, host=dbcreds.host)
+    cursor = conn.cursor()
+    alias = input("Please type your alias: ")
+    password = input("Please type your password: ")
+    if(len(password) < 6):
+        print("Password too short!")
+    else:
+        cursor.execute("INSERT INTO hackers(alias,password) VALUES (?,?)", [alias, password])
+        conn.commit()
+        if(cursor.rowcount == 1):
+            print("User created!")
+        else:
+            print("Error: User not created.")
+
