@@ -53,10 +53,11 @@ def ViewOthersExploits(user):
     try:
         conn = mariadb.connect(user=dbcreds.user, password=dbcreds.password, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM exploits WHERE user_id != ?", [user[0],])
+        cursor.execute("SELECT hackers.alias, hackers.id, exploits.content FROM exploits INNER JOIN hackers ON exploits.user_id = hackers.id WHERE exploits.user_id != ?", [user[0],])
         posts = cursor.fetchall()
         for post in posts:
-            print("\ncontent: " + str((post[1])))
+            print("\nalias: " + str((post[0])))
+            print("\ncontent: " + str((post[2])))
 
     except mariadb.ProgrammingError:
         print("Programming Error!")
